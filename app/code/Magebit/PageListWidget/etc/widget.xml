@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Magebit\PageListWidget\Block\Widget\PageList" id="page_list_widget">
+        <label>Page List Widget</label>
+        <description>Provides the possibility to place a list of CMS pages where necessary.</description>
+        <parameters>
+            <parameter name="title" visible="true" xsi:type="text">
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="display_mode" visible="true" required="true" xsi:type="select">
+                <label translate="true">Display mode</label>
+                <options>
+                    <option name="all_pages" value="all_pages">
+                        <label translate="true">All pages</label>
+                    </option>
+                    <option name="specific_pages" value="specific_pages">
+                        <label translate="true">Specific pages</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="selected_pages" xsi:type="multiselect" visible="true" required="true"
+                       source_model="Magento\Cms\Model\Config\Source\Page">
+                <label translate="true">Selected Pages</label>
+                <depends>
+                    <parameter name="display_mode" value="specific_pages"/>
+                </depends>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

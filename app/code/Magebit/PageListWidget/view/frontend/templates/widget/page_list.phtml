@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var PageList $block
+ * @var Escaper $escaper
+ */
+
+use Magebit\PageListWidget\Block\Widget\PageList;
+use Magento\Framework\Escaper;
+use Magento\Framework\Exception\LocalizedException;
+
+$title = $block->getData('title');
+
+try {
+    $pages = $pages = $block->getPages();
+} catch (LocalizedException $e) {
+    //
+}
+?>
+
+<h1><?= $title ?></h1>
+<?php if (!empty($pages)): ?>
+    <div class="page-list-widget">
+        <ul>
+            <?php foreach ($pages as $page): ?>
+                <li>
+                    <a href="<?= $escaper->escapeUrl($block->getUrl($page->getIdentifier())) ?>">
+                        <?= $escaper->escapeHtml($page->getTitle()) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php else: ?>
+    <div class="page-list-widget">
+        <p>No pages to display.</p>
+    </div>
+<?php endif; ?>
+
+

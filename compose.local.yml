@@ -1,0 +1,66 @@
+version: "3.9"
+
+name: magento
+
+services:
+  php:
+    env_file:
+      - ./.docker/.env.local
+    volumes:
+      - ~/.composer:/var/www/.composer
+    networks:
+      magebit:
+        aliases:
+          - php.magento.docker
+
+  xdebug:
+    env_file:
+      - ./.docker/.env.local
+    volumes:
+      - ~/.composer:/var/www/.composer
+    networks:
+      magebit:
+        aliases:
+          - xdebug.magento.docker
+
+  nginx:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.magento.tls=true
+      - traefik.http.routers.magento.entrypoints=https
+      - traefik.http.routers.magento.rule=Host(`magento.docker`)
+      - traefik.http.services.magento.loadbalancer.server.port=8080
+    env_file:
+      - ./.docker/.env.local
+    networks:
+      magebit:
+        aliases:
+          - nginx.magento.docker
+
+  db:
+    networks:
+      magebit:
+        aliases:
+          - db.magento.docker
+
+  redis:
+    networks:
+      magebit:
+        aliases:
+          - redis.magento.docker
+
+  opensearch:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.magento-es.tls=true
+      - traefik.http.routers.magento-es.entrypoints=https
+      - traefik.http.routers.magento-es.rule=Host(`es.magento.docker`)
+      - traefik.http.services.magento-es.loadbalancer.server.port=9200
+    networks:
+      magebit:
+        aliases:
+          - es.magento.docker
+
+networks:
+  magebit:
+    external: true

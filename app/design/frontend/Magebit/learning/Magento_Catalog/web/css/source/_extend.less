@@ -1,0 +1,217 @@
+@primary-color: #ff5501;
+
+a {
+    color: @primary-color;
+}
+
+.action.primary, .action-primary {
+    background-color: @primary-color;
+    border: none;
+}
+
+.action.primary:hover, .action-primary:hover {
+    background-color: @primary-color;
+    border: none;
+}
+
+// Add review button
+.product-reviews-summary {
+    .reviews-actions {
+        .add {
+            display: inline-block;
+            padding: 5px 5px;
+            border: 1px solid #000;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 0;
+        }
+    }
+
+    .product-reviews-summary .reviews-actions {
+        margin-right: 10px;
+    }
+
+    .product-info-main .rating-summary {
+        margin-right: 10px;
+    }
+}
+
+.product-add-form {
+    .tocart {
+        width: 100% !important;
+        border-radius: 0;
+    }
+}
+
+// Attribute element styling
+.product-attributes-list {
+    background: #f4f4f4;
+    padding: 20px 20px;
+
+    ul {
+        padding: 0 10px;
+        margin: 0;
+        text-align: start;
+    }
+
+    p {
+        font-size: 12px;
+        margin: 0;
+    }
+}
+
+// Upsell product
+.upsell-products {
+    .title-container {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .product-reviews-summary {
+        float: unset;
+    }
+
+    .upsell-product-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 15px;
+        width: 100%;
+
+        .product-item-image {
+            flex: 0 0 auto;
+            width: 20%;
+            margin-right: 20px;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .product-item-details {
+            flex: 1;
+
+            .product-item-name {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .product-item-review {
+                margin-bottom: 10px;
+            }
+
+            .product-item-price {
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .product-item-action {
+                text-align: right;
+
+                .action.view-product {
+                    font-size: 10px;
+                    padding: 5px 5px;
+                    background-color: #333;
+                    color: white;
+                    text-decoration: none;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: darken(#333, 10%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Related products
+.related-products-container {
+    display: inline-block;
+    width: 100%;
+
+    .related-products-title {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .related-items-list {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .product-item-cart {
+        .tocart {
+            width: 100%;
+        }
+
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .product-item {
+        padding: 20px 20px;
+        margin-top: 10px;
+    }
+
+    .product-item {
+        padding-left: 20px !important;
+    }
+
+    .product-item:hover .product-item-cart {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .product-item:hover {
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+// Input counter
+.product-quantity {
+    display: flex;
+    align-items: center;
+
+    .decrease-qty, .increase-qty {
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .input-text.qty {
+        text-align: center;
+        width: 50px;
+        margin: 0 5px;
+    }
+}
+
+// Stock availability
+.stock-availability {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .checkmark {
+        width: 20px;
+        height: auto;
+        margin-right: 5px;
+    }
+
+    .in-stock {
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}

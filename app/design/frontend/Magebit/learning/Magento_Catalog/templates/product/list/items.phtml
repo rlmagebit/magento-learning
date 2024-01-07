@@ -1,0 +1,95 @@
+<?php
+/**
+ * @var AbstractProduct $block
+ * @var Escaper $escaper
+ */
+
+use Magento\Catalog\Block\Product\AbstractProduct;
+use Magento\Framework\Escaper;
+
+$blockType = $block->getType();
+
+if ($blockType === 'related') { ?>
+    <div class="related-products-container">
+        <div class="related-products-title">
+            <h3><?= __('Related products') ?></h3>
+        </div>
+        <div class="related-items-list">
+            <?php foreach ($block->getItems() as $_item) {
+                $image = $block->getImage($_item, 'category_page_grid');
+                $productName = $_item->getName();
+                $reviewSummary = $block->getReviewsSummaryHtml($_item, "short", true);
+                $price = $block->getProductPrice($_item);
+                $addToCartUrl = $block->getAddToCartUrl($_item);
+                ?>
+
+                <div class="product-item">
+                    <div class="product-item-image">
+                        <?= $image->toHtml(); ?>
+                    </div>
+                    <div class="product-item-details">
+                        <strong class="product-item-name"><?= $escaper->escapeHtml($productName) ?></strong>
+                        <div class="product-item-review">
+                            <?= $reviewSummary ?>
+                        </div>
+                        <div class="product-item-price">
+                            <?= $price ?>
+                        </div>
+                        <div class="product-item-cart">
+                            <form action="<?= $escaper->escapeUrl($addToCartUrl) ?>" method="post">
+                                <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                        class="action tocart primary">
+                                    <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($blockType === 'upsell') { ?>
+    <div class="upsell-products">
+        <div class="title-container">
+            <h4 class="upsell-title"><?= __('We found other products you might like!') ?></h4>
+        </div>
+        <div class="upsell-items-list">
+            <?php foreach ($block->getItems() as $_item) {
+                $image = $block->getImage($_item, 'category_page_grid');
+                $productName = $_item->getName();
+                $reviewSummary = $block->getReviewsSummaryHtml($_item, "short", true);
+                $price = $block->getProductPrice($_item);
+                $productUrl = $_item->getProductUrl();
+                ?>
+
+                <div class="upsell-product-item">
+                    <div class="product-item-image">
+                        <a href="<?= $escaper->escapeUrl($productUrl) ?>">
+                            <?= $image->toHtml(); ?>
+                        </a>
+                    </div>
+                    <div class="product-item-details">
+                        <div>
+                            <strong class="product-item-name"><?= $escaper->escapeHtml($productName) ?></strong>
+                            <div class="product-item-review">
+                                <?= $reviewSummary ?>
+                            </div>
+                            <div class="product-item-price">
+                                <?= $price ?>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item-action">
+                                <a href="<?= $escaper->escapeUrl($productUrl) ?>" class="action view-product">
+                                    <?= $escaper->escapeHtml(__('View Product')) ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+<?php } ?>

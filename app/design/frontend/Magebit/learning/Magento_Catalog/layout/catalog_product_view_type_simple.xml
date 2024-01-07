@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="product.info.stock.sku" destination="product.info.price"/>
+        <move element="product.info.upsell" destination="product.info.addtocart"/>
+
+        <referenceBlock name="product.info.overview" remove="true"/>
+        <referenceBlock name="product.info.addto" remove="true"/>
+        <referenceBlock name="product.info.stock.sku" remove="true"/>
+        <referenceBlock name="product.info.details" remove="true"/>
+
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Catalog\Block\Product\View" name="product.attributes.list" as="product_attributes"
+                   after="product.info.price" template="Magento_Catalog::product/view/attributes.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,46 @@
+<?php
+/**
+ * @var View $block
+ */
+
+use Magento\Catalog\Block\Product\View;
+
+$product = $block->getProduct();
+
+$stockItem = $product->getExtensionAttributes()->getStockItem();
+$isInStock = $stockItem->getIsInStock();
+$qtyAvailable = $stockItem->getQty();
+
+?>
+<div id="add-to-cart-container" class="add-to-cart-container" data-bind="scope:'qty-counter'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#add-to-cart-container": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "qty-counter": {
+                            "component": "js/qty-counter",
+                            "product_id": <?= /* @noEscape */ $block->getProduct()->getId() ?>
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>
+<?php if ($isInStock && $qtyAvailable > 0): ?>
+    <div class="stock-availability">
+        <img class="checkmark" src="<?= $block->getViewFileUrl('images/check-mark-green.png') ?>" alt="check-mark">
+        <span class="in-stock"><?= $block->escapeHtml(__('IN STOCK')) ?></span>
+        <span class="items-available"><?= (int)$qtyAvailable . ' ' . __('items available') ?></span>
+    </div>
+<?php endif; ?>
+<div class="actions">
+    <button type="submit"
+            class="action primary tocart"
+            id="product-addtocart-button">
+        <span><?= __('Add to Cart') ?></span>
+    </button>
+    <?php echo $block->getChildHtml('', true) ?>
+</div>

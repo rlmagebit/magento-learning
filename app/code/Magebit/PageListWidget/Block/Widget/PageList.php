@@ -15,15 +15,9 @@ class PageList extends Template implements BlockInterface
 {
     protected $_template = "widget/page_list.phtml";
 
-    protected PageRepositoryInterface $pageRepository;
-    protected SearchCriteriaBuilder $searchCriteriaBuilder;
-
-    public function __construct(Template\Context $context, PageRepositoryInterface $pageRepository, SearchCriteriaBuilder $searchCriteriaBuilder, array $data = [])
+    public function __construct(Template\Context $context, private readonly PageRepositoryInterface $pageRepository, private readonly SearchCriteriaBuilder $searchCriteriaBuilder, array $data = [])
     {
         parent::__construct($context, $data);
-
-        $this->pageRepository = $pageRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**

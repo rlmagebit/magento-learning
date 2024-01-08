@@ -1,7 +1,7 @@
 const config = {
     map: {
         '*': {
-            'qty-counter': 'js/qty-counter'
+            'qty-counter': 'Magento_Catalog/js/qty-counter'
         }
     }
 };

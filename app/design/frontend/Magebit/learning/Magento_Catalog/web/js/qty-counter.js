@@ -6,7 +6,7 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'input-counter',
+            template: 'Magento_Catalog/input-counter',
             qty: 1
         },
 

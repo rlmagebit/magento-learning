@@ -1,16 +1,19 @@
 <?php
 /**
  * @var View $block
+ * @var Escaper $escaper
  */
 
 use Magento\Catalog\Block\Product\View;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Escaper;
 
 $product = $block->getProduct();
 
-$stockItem = $product->getExtensionAttributes()->getStockItem();
-$isInStock = $stockItem->getIsInStock();
-$qtyAvailable = $stockItem->getQty();
-
+$objectManager = ObjectManager::getInstance();
+$stockState = $objectManager->get('\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface');
+$qtyAvailable = $stockState->execute($product->getSku(), 2);
+$isInStock = $qtyAvailable > 0;
 ?>
 <div id="add-to-cart-container" class="add-to-cart-container" data-bind="scope:'qty-counter'">
     <!-- ko template: getTemplate() --><!-- /ko -->
@@ -20,7 +23,7 @@ $qtyAvailable = $stockItem->getQty();
                 "Magento_Ui/js/core/app": {
                     "components": {
                         "qty-counter": {
-                            "component": "js/qty-counter",
+                            "component": "Magento_Catalog/js/qty-counter",
                             "product_id": <?= /* @noEscape */ $block->getProduct()->getId() ?>
                         }
                     }
@@ -31,8 +34,8 @@ $qtyAvailable = $stockItem->getQty();
 </div>
 <?php if ($isInStock && $qtyAvailable > 0): ?>
     <div class="stock-availability">
-        <img class="checkmark" src="<?= $block->getViewFileUrl('images/check-mark-green.png') ?>" alt="check-mark">
-        <span class="in-stock"><?= $block->escapeHtml(__('IN STOCK')) ?></span>
+        <img class="checkmark" src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/check-mark-green.png')) ?>" alt="check-mark">
+        <span class="in-stock"><?= __('IN STOCK') ?></span>
         <span class="items-available"><?= (int)$qtyAvailable . ' ' . __('items available') ?></span>
     </div>
 <?php endif; ?>
@@ -42,5 +45,5 @@ $qtyAvailable = $stockItem->getQty();
             id="product-addtocart-button">
         <span><?= __('Add to Cart') ?></span>
     </button>
-    <?php echo $block->getChildHtml('', true) ?>
+    <?php echo $escaper->escapeHtml($block->getChildHtml('', true)) ?>
 </div>

@@ -9,34 +9,27 @@ use Magento\Framework\Escaper;
 
 $blockType = $block->getType();
 
-if ($blockType === 'related') { ?>
+if ($blockType === 'related'): ?>
     <div class="related-products-container">
         <div class="related-products-title">
             <h3><?= __('Related products') ?></h3>
         </div>
         <div class="related-items-list">
-            <?php foreach ($block->getItems() as $_item) {
-                $image = $block->getImage($_item, 'category_page_grid');
-                $productName = $_item->getName();
-                $reviewSummary = $block->getReviewsSummaryHtml($_item, "short", true);
-                $price = $block->getProductPrice($_item);
-                $addToCartUrl = $block->getAddToCartUrl($_item);
-                ?>
-
+            <?php foreach ($block->getItems() as $_item): ?>
                 <div class="product-item">
                     <div class="product-item-image">
-                        <?= $image->toHtml(); ?>
+                        <?= $block->getImage($_item, 'category_page_grid')->toHtml() ?>
                     </div>
                     <div class="product-item-details">
-                        <strong class="product-item-name"><?= $escaper->escapeHtml($productName) ?></strong>
+                        <strong class="product-item-name"><?= $escaper->escapeHtml($_item->getName()) ?></strong>
                         <div class="product-item-review">
-                            <?= $reviewSummary ?>
+                            <?= $block->getReviewsSummaryHtml($_item, "short", true) ?>
                         </div>
                         <div class="product-item-price">
-                            <?= $price ?>
+                            <?= $block->getProductPrice($_item) ?>
                         </div>
                         <div class="product-item-cart">
-                            <form action="<?= $escaper->escapeUrl($addToCartUrl) ?>" method="post">
+                            <form action="<?= $escaper->escapeUrl($block->getAddToCartUrl($_item)) ?>" method="post">
                                 <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
                                         class="action tocart primary">
                                     <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
@@ -45,51 +38,49 @@ if ($blockType === 'related') { ?>
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+            <?php endforeach; ?>
         </div>
     </div>
-<?php } ?>
+<?php endif; ?>
 
-<?php if ($blockType === 'upsell') { ?>
+<?php if ($blockType === 'upsell'): ?>
     <div class="upsell-products">
         <div class="title-container">
             <h4 class="upsell-title"><?= __('We found other products you might like!') ?></h4>
         </div>
         <div class="upsell-items-list">
-            <?php foreach ($block->getItems() as $_item) {
-                $image = $block->getImage($_item, 'category_page_grid');
-                $productName = $_item->getName();
+            <?php foreach ($block->getItems() as $_item): ?>
                 $reviewSummary = $block->getReviewsSummaryHtml($_item, "short", true);
                 $price = $block->getProductPrice($_item);
-                $productUrl = $_item->getProductUrl();
                 ?>
 
                 <div class="upsell-product-item">
                     <div class="product-item-image">
-                        <a href="<?= $escaper->escapeUrl($productUrl) ?>">
-                            <?= $image->toHtml(); ?>
+                        <a href="<?= $escaper->escapeUrl($_item->getProductUrl()) ?>">
+                            <?= $escaper->escapeHtml($block->getImage($_item, 'category_page_grid')->toHtml()); ?>
                         </a>
                     </div>
                     <div class="product-item-details">
                         <div>
-                            <strong class="product-item-name"><?= $escaper->escapeHtml($productName) ?></strong>
+                            <strong class="product-item-name"><?= $escaper->escapeHtml($_item->getName()) ?></strong>
                             <div class="product-item-review">
-                                <?= $reviewSummary ?>
+                                <?= $escaper->escapeHtml($block->getReviewsSummaryHtml($_item, "short", true)) ?>
                             </div>
                             <div class="product-item-price">
-                                <?= $price ?>
+                                <?= $escaper->escapeHtml($block->getProductPrice($_item)) ?>
                             </div>
                         </div>
                         <div>
                             <div class="product-item-action">
-                                <a href="<?= $escaper->escapeUrl($productUrl) ?>" class="action view-product">
+                                <a href="<?= $escaper->escapeUrl($_item->getProductUrl()) ?>"
+                                   class="action view-product">
                                     <?= $escaper->escapeHtml(__('View Product')) ?>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+            <?php endforeach; ?>
         </div>
     </div>
-<?php } ?>
+<?php endif; ?>

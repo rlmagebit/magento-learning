@@ -1,18 +1,21 @@
 @primary-color: #ff5501;
 
-a {
-    color: @primary-color;
+.catalog-product-view {
+    a {
+        color: @primary-color;
+    }
+
+    .action.primary {
+        background-color: @primary-color;
+        border: none;
+
+        &:hover {
+            background-color: @primary-color;
+            border: none;
+        }
+    }
 }
 
-.action.primary, .action-primary {
-    background-color: @primary-color;
-    border: none;
-}
-
-.action.primary:hover, .action-primary:hover {
-    background-color: @primary-color;
-    border: none;
-}
 
 // Add review button
 .product-reviews-summary {

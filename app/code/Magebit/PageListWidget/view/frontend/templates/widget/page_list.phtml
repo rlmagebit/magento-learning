@@ -17,7 +17,7 @@ try {
 }
 ?>
 
-<h1><?= $title ?></h1>
+<h1><?= $escaper->escapeHtml($title) ?></h1>
 <?php if (!empty($pages)): ?>
     <div class="page-list-widget">
         <ul>
@@ -32,7 +32,7 @@ try {
     </div>
 <?php else: ?>
     <div class="page-list-widget">
-        <p>No pages to display.</p>
+        <p><?= __('No pages to display.') ?></p>
     </div>
 <?php endif; ?>
 

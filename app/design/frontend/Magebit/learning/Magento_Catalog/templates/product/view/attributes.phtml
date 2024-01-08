@@ -28,29 +28,28 @@ foreach ($attributes as $attribute) {
 // If some are missing, then add from secondary attributes.
 $countMain = count($mainAttributes);
 $countRequired = count($mainCodes);
-$diff = $countMain - $countRequired;
+$diff = $countRequired - $countMain;
 
-if ($diff < 0) {
-    // Loop $diff times, to fill out the primary attributes to size 3.
-    for ($i = 0; $i < abs($diff); $i++) {
-        $mainAttributes[] = $secondaryAttributes[$i];
-    }
-} ?>
+// Loop $diff times, to fill out the primary attributes to size 3.
+for ($i = 0; $i < $diff; $i++) {
+    $mainAttributes[] = $secondaryAttributes[$i];
+}
+?>
 
 <div class="product-attributes-list">
     <ul>
-        <?php
-        foreach ($mainAttributes as $attribute) {
-            if ($attribute->getIsVisibleOnFront() && !is_null($product->getData($attribute->getAttributeCode()))) {
+        <?php foreach ($mainAttributes as $attribute): ?>
+            <?php if ($attribute->getIsVisibleOnFront() && !is_null($product->getData($attribute->getAttributeCode()))): ?>
+                <?php
                 $label = $attribute->getStoreLabel();
                 $value = $attribute->getFrontend()->getValue($product);
-
-                echo '<li><strong>' . $label . ':</strong> ' . $value . '</li>';
-            }
-        }
-        ?>
+                ?>
+                <?= '<li><strong>' . $escaper->escapeHtml($label) . ':</strong> ' . $escaper->escapeHtml($value) . '</li>' ?>;
+                ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </ul>
     <p>
-        <?= $product->getShortDescription(); ?>
+        <?= $escaper->escapeHtml($product->getShortDescription()); ?>
     </p>
 </div>
